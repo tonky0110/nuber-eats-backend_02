@@ -22,7 +22,7 @@ export class RestaurantService {
         return this.restaurants.save(newRestaurant);
     }
 
-    updateRestaurant(updateRestaurantDto: UpdateRestaurantDto): Promise<Restaurant> {
-        return this.restaurants.update({ updateRestaurantDto });
+    updateRestaurant({ id, data }: UpdateRestaurantDto) {
+        return this.restaurants.update(id, { ...data });
     }
 }

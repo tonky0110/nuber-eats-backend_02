@@ -29,7 +29,7 @@ export class RestaurantResolver{
         @Args('input') updateRestaurantDto: UpdateRestaurantDto
     ): Promise<Boolean> {
         try{
-            this.restaurantService.updateRestaurant(updateRestaurantDto);
+            await this.restaurantService.updateRestaurant(updateRestaurantDto);
             return true;
         } catch(e){
             console.error(e);
