@@ -23,7 +23,7 @@ export class Restaurant {
     isVegan: boolean;
 
     @Field(type => String) // for graphql
-    @Column({ default: '강남' }) // for typeORM
+    @Column({ nullable: false, default: '강남' }) // for typeORM
     @IsOptional() // for validation체크
     @IsString() // for validation체크
     address: string;
