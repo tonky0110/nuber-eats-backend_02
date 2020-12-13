@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { CommonModule } from './common/common.module';
 import { JwtModule } from './jwt/jwt.module';
+import { JwtMiddleware } from './jwt/jwt.middleware';
 
 
 @Module({
@@ -51,7 +52,20 @@ import { JwtModule } from './jwt/jwt.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // 특정 url를 지정해서 사용하는 경우
+    consumer.apply(JwtMiddleware).forRoutes({
+      path: '/graphql', // path: '*', // 전체
+      method: RequestMethod.ALL
+    });
+    // // 특정 url는 제외하는 경우
+    // consumer.apply(JwtMiddleware).exclude({
+    //   path: '/api',
+    //   method: RequestMethod.ALL
+    // });
+  }
+}
 
 
 
