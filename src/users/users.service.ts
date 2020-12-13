@@ -36,4 +36,39 @@ export class UsersService{
             };
         }
     }
+
+    async login({ email, password }): Promise<{ ok: boolean, error?: string, token?: string }> {
+        try {
+            // 1. find the user with the email.
+            const user = await this.users.findOne({ email });
+            if(!user) {
+                return {
+                    ok: false,
+                    error: 'User not found.'
+                };
+            }
+
+            // 2. check if the password is correct.
+            const paswordCorrect = await user.checkPassword(password);
+            if(!paswordCorrect) {
+                return {
+                    ok: false,
+                    error: 'Wrong Password.'
+                };
+            }
+
+            // 3. make a JWT and give it to the user
+            return {
+                ok: true,
+                error: null,
+                token: 'lalalalal'
+            };
+        } catch (error) {
+            return {
+                ok: false,
+                error: ''
+            }
+        }
+
+    }
 }
