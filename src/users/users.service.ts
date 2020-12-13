@@ -14,22 +14,19 @@ export class UsersService{
         return this.users.find();
     }
 
-    async createAccount({ email, password, role }) {
+    async createAccount({ email, password, role }): Promise<string | undefined> {
         // check new User
         try {
+            // check exists user
             const exists = await this.users.findOne({ email });
             if(exists) {
-                // exists user.
                 // make error
-                return;
+                return 'There is a user width that email already.';
             }
             // create user & hash the password
             await this.users.save(await this.users.create({ email, password, role }));
-            return true;
         } catch (error) {
-            return;
+            return "couldn't create account.";
         }
-        
-        // return 
     }
 }
