@@ -50,16 +50,7 @@ import { jwtMiddleware } from './jwt/jwt.middleware';
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    // 특정 url를 지정해서 사용하는 경우
-    consumer.apply(jwtMiddleware).forRoutes({
-      path: '/graphql', // path: '*', // 전체
-      method: RequestMethod.ALL
-    });
-  }
-}
-
+export class AppModule {}
 
 
 
