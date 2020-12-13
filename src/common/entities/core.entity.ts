@@ -1,12 +1,16 @@
+import { Field } from "@nestjs/graphql";
 import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 export class CoreEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn() // for typeORM
+    @Field(type => Number) // for graphql
     id: number;
 
-    @CreateDateColumn()
+    @CreateDateColumn() // for typeORM
+    @Field(type => Date) // for graphql
     createdAt: Date;
 
-    @UpdateDateColumn()
+    @UpdateDateColumn() // for typeORM
+    @Field(type => Date) // for graphql
     updatedAt: Date;
 }
