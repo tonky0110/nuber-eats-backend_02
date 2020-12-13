@@ -14,7 +14,22 @@ export class UsersService{
         return this.users.find();
     }
 
-    // createAccount(createAccountInput): Promise<CreateAccountInput> {
-    //     // return this.users.create(createAccountInput);
-    // }
+    async createAccount({ email, password, role }) {
+        // check new User
+        try {
+            const exists = await this.users.findOne({ email });
+            if(exists) {
+                // exists user.
+                // make error
+                return;
+            }
+            // create user & hash the password
+            await this.users.save(await this.users.create({ email, password, role }));
+            return true;
+        } catch (error) {
+            return;
+        }
+        
+        // return 
+    }
 }
