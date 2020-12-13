@@ -3,14 +3,12 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-// import { RestaurantsModule } from './restaurants/restaurants.module';
-// import { Restaurant } from './restaurants/entities/restaurant.entity';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { CommonModule } from './common/common.module';
 import { JwtModule } from './jwt/jwt.module';
-import { JwtMiddleware } from './jwt/jwt.middleware';
 
+import { jwtMiddleware } from './jwt/jwt.middleware';
 
 @Module({
   imports: [
@@ -55,15 +53,10 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     // 특정 url를 지정해서 사용하는 경우
-    consumer.apply(JwtMiddleware).forRoutes({
+    consumer.apply(jwtMiddleware).forRoutes({
       path: '/graphql', // path: '*', // 전체
       method: RequestMethod.ALL
     });
-    // // 특정 url는 제외하는 경우
-    // consumer.apply(JwtMiddleware).exclude({
-    //   path: '/api',
-    //   method: RequestMethod.ALL
-    // });
   }
 }
 
